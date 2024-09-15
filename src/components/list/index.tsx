@@ -13,11 +13,11 @@ export interface RestVariab {
     category: string;
 }
 
-interface RestaurantListProps {  // Adicionando a interface para as props
-    searchQuery: string;  // Propriedade para a busca
+interface RestaurantListProps {
+    searchQuery: string;
 }
 
-export function RestaurantList({ searchQuery }: RestaurantListProps) {  // Recebendo a propriedade searchQuery
+export function RestaurantList({ searchQuery }: RestaurantListProps) {
     const [restaurants, setRestaurants] = useState<RestVariab[]>([]);
 
     useEffect(() => {
@@ -32,7 +32,7 @@ export function RestaurantList({ searchQuery }: RestaurantListProps) {  // Receb
         }
 
         getRestaurants();
-    }, [searchQuery]);  // Atualiza sempre que o searchQuery mudar
+    }, [searchQuery]);
 
     return (
         <View className="px-4 flex-1 w-full h-full mb-11 gap-4">
