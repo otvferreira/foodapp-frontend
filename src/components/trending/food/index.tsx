@@ -13,13 +13,16 @@ export function CardHorizontalFood({ food }: { food: FoodVariab }) {
             <View className="flex flex-row bg-neutral-900/90 w-fit gap-1 rounded-full absolute top-2 right-2 px-2 py-1
             items-center justify-center">
                 <Ionicons name="star" size={14} color="#ca8a04">
-                    {/* <Text className="text-white text-sm">{food.rating}</Text> */}
                 </Ionicons>
             </View>
 
             <Text className="text-black mt-1">
                 {food.name}
             </Text>
+
+            <View className="flex flex-row justify-end items-center">
+                <Text className='text-green-700 font-medium text-lg'>R$ {food.price}</Text>
+            </View>
         </Pressable>
     );
 }

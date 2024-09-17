@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useState, useEffect } from 'react';
 import { RestaurantItem } from "./item";
-import { Search } from '../input-search';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface RestVariab {
     id: number;
@@ -26,9 +26,32 @@ export function RestaurantList({ searchQuery }: RestaurantListProps) {
             if (searchQuery) {
                 url += `?search=${searchQuery}`;
             }
-            const response = await fetch(url);
-            const data = await response.json();
-            setRestaurants(data);
+
+            try {
+                // Recuperar o token do AsyncStorage
+                const token = await AsyncStorage.getItem('token');
+
+                if (!token) {
+                    throw new Error("Token de autenticação não encontrado");
+                }
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar restaurantes');
+                }
+
+                const data = await response.json();
+                setRestaurants(data);
+            } catch (error) {
+                console.error('Erro ao buscar restaurantes:', error);
+            }
         }
 
         getRestaurants();
